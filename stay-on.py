@@ -13,6 +13,7 @@ if not args.path.endswith('stay-on-until.txt'):
 else:
     path = args.path
 
-hour_from_now = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(hours=1)
+hour_from_now = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(hours=1).isoformat()
 with open(path, 'w') as f:
-    f.write(hour_from_now.isoformat())
+    f.write(hour_from_now)
+print(f'staying on until {hour_from_now} (~1 hour)')
