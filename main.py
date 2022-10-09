@@ -18,7 +18,7 @@ os.chdir(DIR)
 
 #===== helpers =====#
 def read_time_from(path):
-    if not os.path.exist(path):
+    if not os.path.exists(path):
         return None
     with open(path) as f:
         s = f.read()
