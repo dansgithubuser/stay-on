@@ -35,6 +35,7 @@ if t := read_time_from(REQUESTS_PATH):
         t_prev = read_time_from(STATE_PATH)
         if not t_prev or t_prev < t:
             write_time_to(STATE_PATH, t)
+            write_time_to('requests/staying-on-until.txt', t)
 
 # honor a previous request to stay on
 if t := read_time_from(STATE_PATH):
