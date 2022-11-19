@@ -28,6 +28,10 @@ def write_time_to(path, t):
     with open(path, 'w') as f:
         f.write(t.isoformat())
 
+def tprint(s):
+    t = datetime.datetime.now(tz=datetime.timezone.utc).isoformat()
+    print(f'{t}: {s}')
+
 #===== main =====#
 # check for new request to stay on
 if t := read_time_from(REQUESTS_PATH):
@@ -38,6 +42,7 @@ if t := read_time_from(REQUESTS_PATH):
         if not t_prev or t_prev < t:
             write_time_to(STATE_PATH, t)
             write_time_to('requests/staying-on-until.txt', t)
+            tprint(f'staying on until {t.isoformat()}')
 
 # honor a previous request to stay on
 if t := read_time_from(STATE_PATH):
@@ -47,7 +52,9 @@ if t := read_time_from(STATE_PATH):
 # stay on if we booted less than 5 minutes ago
 with open('/proc/uptime') as f:
     if float(f.read().split()[0]) < 300:
+        tprint('booted recently')
         sys.exit()
 
 # turn off
+tprint('turning off')
 subprocess.run('poweroff', check=True)
